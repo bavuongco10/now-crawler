@@ -15,13 +15,22 @@ imp.reload(search_delivery_ids)
 imp.reload(get_detail)
 imp.reload(get_delivery_dishes)
 
-delivery_ids_obj = search_delivery_ids.crawl()
-delivery_ids = delivery_ids_obj['reply']['delivery_ids']
+total_delivery_ids = []
+
+
+for combine_category in search_delivery_ids.combine_categories:
+    payload = search_delivery_ids.default_payload
+    payload['combine_categories'] = [combine_category]
+    delivery_ids_obj = search_delivery_ids.crawl(payload)
+    delivery_ids = delivery_ids_obj['reply']['delivery_ids']
+    for id in delivery_ids:
+        if(id not in total_delivery_ids): total_delivery_ids.append(id)
+
 
 data = []
 
 count = 0
-for request_id in delivery_ids:
+for request_id in total_delivery_ids:
     detail = get_detail.crawl(request_id)
     dishes = get_delivery_dishes.crawl(request_id)
     data.append({ 'request_id': request_id, 'get_detail': detail, 'get_delivery_dishes': dishes})

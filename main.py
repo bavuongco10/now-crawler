@@ -10,6 +10,7 @@ import search_delivery_ids
 import get_detail
 import get_delivery_dishes
 import get_promotion_ids
+import write_json
 import imp
 
 imp.reload(search_delivery_ids)
@@ -43,7 +44,11 @@ count = 0
 for request_id in total_delivery_ids:
     detail = get_detail.crawl(request_id)
     dishes = get_delivery_dishes.crawl(request_id)
-    data.append({ 'request_id': request_id, 'get_detail': detail, 'get_delivery_dishes': dishes})
+    
+    request_data = { 'request_id': request_id, 'get_detail': detail, 'get_delivery_dishes': dishes}
+    json_name = f'request_id-{request_id}'
+    write_json.write(data, json_name)
+    data.append(request_data)
     
     count += 1
     print('count:', count)

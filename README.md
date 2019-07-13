@@ -9,3 +9,6 @@ pip install -r requirements.txt
 ```
 python main.py
 ```
+
+## Development:
+Data should remain inside local variable `data` in the `main.py` file.

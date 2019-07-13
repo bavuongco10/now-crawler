@@ -47,7 +47,7 @@ for request_id in total_delivery_ids:
     
     request_data = { 'request_id': request_id, 'get_detail': detail, 'get_delivery_dishes': dishes}
     json_name = f'request_id-{request_id}'
-    write_json.write(data, json_name)
+    write_json.write(request_data, json_name)
     data.append(request_data)
     
     count += 1
